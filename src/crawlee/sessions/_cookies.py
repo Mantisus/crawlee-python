@@ -52,6 +52,7 @@ class PlaywrightCookieParam(TypedDict, total=False):
     httpOnly: NotRequired[bool]
     expires: NotRequired[float]
     sameSite: NotRequired[Literal['Lax', 'None', 'Strict']]
+    partitionKey: NotRequired[str | None]
 
 
 @docs_group('Data structures')
@@ -93,6 +94,7 @@ class SessionCookies:
         http_only: bool = False,
         secure: bool = False,
         same_site: Literal['Lax', 'None', 'Strict'] | None = None,
+        **_kwargs: Any,  # Unknown parameters will be ignored.
     ) -> None:
         """Create and store a cookie with modern browser attributes.
 
