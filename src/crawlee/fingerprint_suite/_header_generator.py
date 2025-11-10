@@ -11,9 +11,9 @@ if TYPE_CHECKING:
 
 
 def fingerprint_browser_type_from_playwright_browser_type(
-    playwright_browser_type: Literal['chromium', 'firefox', 'webkit', 'chrome'],
+    playwright_browser_type: Literal['chromium', 'firefox', 'webkit'],
 ) -> SupportedBrowserType:
-    if playwright_browser_type in {'chromium', 'chrome'}:
+    if playwright_browser_type == 'chromium':
         return 'chrome'
     if playwright_browser_type == 'firefox':
         return 'firefox'

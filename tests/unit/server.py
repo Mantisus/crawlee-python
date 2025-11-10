@@ -18,7 +18,6 @@ from tests.unit.server_endpoints import (
     GENERIC_RESPONSE,
     HELLO_WORLD,
     INCAPSULA,
-    PROBLEMATIC_LINKS,
     ROBOTS_TXT,
     SECONDARY_INDEX,
     START_ENQUEUE,
@@ -103,7 +102,6 @@ async def app(scope: dict[str, Any], receive: Receive, send: Send) -> None:
         'page_1': generic_response_endpoint,
         'page_2': generic_response_endpoint,
         'page_3': generic_response_endpoint,
-        'problematic_links': problematic_links_endpoint,
         'set_cookies': set_cookies,
         'set_complex_cookies': set_complex_cookies,
         'cookies': get_cookies,
@@ -286,14 +284,6 @@ async def generic_response_endpoint(_scope: dict[str, Any], _receive: Receive, s
     await send_html_response(
         send,
         GENERIC_RESPONSE,
-    )
-
-
-async def problematic_links_endpoint(_scope: dict[str, Any], _receive: Receive, send: Send) -> None:
-    """Handle requests with a page containing problematic links."""
-    await send_html_response(
-        send,
-        PROBLEMATIC_LINKS,
     )
 
 
