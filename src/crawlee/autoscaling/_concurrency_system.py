@@ -125,7 +125,7 @@ class ConcurrencySystem:
             autoscale_interval: Interval at which the desired concurrency is adjusted to the system load.
             logging_interval: Interval at which the system logs its state. `None` turns the logging off.
             load_signals: The signals that decide whether the machine is overloaded: options of the built-in memory,
-                event loop, CPU and storage client signals, `False` to switch one off, and custom signals of your own.
+                event loop, CPU and storage backend signals, `False` to switch one off, and custom signals of your own.
             snapshot_history: How far back the autoscaling looks. The signals keep at least this much history.
             current_history: How far back the check before each new task looks. Keep it shorter than
                 `snapshot_history`, so that task starts react to load spikes quickly while scaling stays stable.

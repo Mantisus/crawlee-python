@@ -78,7 +78,7 @@ def test_get_system_info() -> None:
         load_signal('cpu_info', list(zip(minutes, [False, False, True, True], strict=True))),
         load_signal('memory_info', list(zip(seconds, [False, True, True, False], strict=True))),
         load_signal('event_loop_info', list(zip(minutes, [True, True, False, False], strict=True))),
-        load_signal('storage_client_info', list(zip(minutes, [False, False, False, False], strict=True))),
+        load_signal('storage_backend_info', list(zip(minutes, [False, False, False, False], strict=True))),
     ]
     system_status = SystemStatus(
         snapshotter(*signals),
@@ -91,7 +91,7 @@ def test_get_system_info() -> None:
         cpu_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=1.0),
         memory_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0.5),
         event_loop_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0),
-        storage_client_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0),
+        storage_backend_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0),
         created_at=current_system_info.created_at,
     )
     assert current_system_info.is_system_idle is False
@@ -101,7 +101,7 @@ def test_get_system_info() -> None:
         cpu_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0.667),
         memory_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0.667),
         event_loop_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0.333),
-        storage_client_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0),
+        storage_backend_info=LoadRatioInfo(limit_ratio=0.5, actual_ratio=0),
         created_at=historical_system_info.created_at,
     )
     assert historical_system_info.is_system_idle is False
@@ -141,7 +141,7 @@ def test_historical_window(*, snapshot_history: timedelta, is_system_idle: bool)
 def test_overloaded_ratio(*, overloaded_ratio: float, is_overloaded: bool) -> None:
     """The signal's own ratio decides whether its share of overloaded time counts as overloaded."""
     signal = load_signal(
-        'storage_client_info',
+        'storage_backend_info',
         [
             (timedelta(minutes=3), True),
             (timedelta(minutes=2), True),
@@ -153,7 +153,7 @@ def test_overloaded_ratio(*, overloaded_ratio: float, is_overloaded: bool) -> No
     system_status = SystemStatus(snapshotter(signal), snapshot_history=timedelta(minutes=10))
 
     # Ratio of overloaded snapshots is 2/3 (2 minutes out of 3)
-    assert system_status.get_historical_system_info().storage_client_info.is_overloaded == is_overloaded
+    assert system_status.get_historical_system_info().storage_backend_info.is_overloaded == is_overloaded
 
 
 def test_simultaneous_snapshots_count() -> None:

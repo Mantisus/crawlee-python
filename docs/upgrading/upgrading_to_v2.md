@@ -147,7 +147,7 @@ A crawler without an `id` gets its creation index, such as `'0'`, and crawlers w
 
 Load monitoring and concurrency scaling moved from `AutoscaledPool` to the new `ConcurrencySystem`. A crawler builds a default system from its `concurrency_settings` for each run, so a crawler configured through `concurrency_settings` works as before. To cap the combined concurrency of several crawlers, pass one shared `ConcurrencySystem` to all of them through the new `concurrency_system` option.
 
-The autoscaling classes now live in the public `crawlee.autoscaling` package, which replaces the private `crawlee._autoscaling`. Import `AutoscaledPool`, `ConcurrencySystem`, `ConcurrencyConsumer`, `SystemInfo` and `LoadRatioInfo` from there, along with the new load signal API: the built-in signals (`MemoryLoadSignal`, `EventLoopLoadSignal`, `CpuLoadSignal`, `StorageClientLoadSignal`) and their options, `LoadSignalsOptions`, `SnapshotStore`, `LoadSnapshot` and `LoadSignalStartContext`. `Snapshotter` and `SystemStatus` stay internal.
+The autoscaling classes now live in the public `crawlee.autoscaling` package, which replaces the private `crawlee._autoscaling`. Import `AutoscaledPool`, `ConcurrencySystem`, `ConcurrencyConsumer`, `SystemInfo` and `LoadRatioInfo` from there, along with the new load signal API: the built-in signals (`MemoryLoadSignal`, `EventLoopLoadSignal`, `CpuLoadSignal`, `StorageBackendLoadSignal`) and their options, `LoadSignalsOptions`, `SnapshotStore`, `LoadSnapshot` and `LoadSignalStartContext`. `Snapshotter` and `SystemStatus` stay internal.
 
 `AutoscaledPool` now only runs the task loop. If you create a pool yourself, note that:
 
@@ -197,11 +197,11 @@ The value has to be a whole number of at least 1, or infinity, which is the defa
 
 ## `SystemInfo.client_info` is renamed
 
-`SystemInfo.client_info` is renamed to `storage_client_info`, after the `StorageClientLoadSignal` that reports it. The new `load_signal_info` holds the verdicts of custom load signals by name. For how to configure the signals or add your own, see [Load signals](../guides/scaling-crawlers#load-signals).
+`SystemInfo.client_info` is renamed to `storage_backend_info`, after the `StorageBackendLoadSignal` that reports it. The new `load_signal_info` holds the verdicts of custom load signals by name. For how to configure the signals or add your own, see [Load signals](../guides/scaling-crawlers#load-signals).
 
 ## `max_client_errors` defaults to 3
 
-`Configuration.max_client_errors` now defaults to 3, the same as Crawlee JS. A snapshot of the storage client counts as overloaded only once its rate-limit errors grow by more than 3 between two snapshots, which are taken a second apart by default. In v1, the limit was 1. The change affects only a storage client that reports rate-limit errors through `get_rate_limit_errors`, which none of the built-in ones do. To keep the old limit, set `max_client_errors=1` or the `CRAWLEE_MAX_CLIENT_ERRORS` environment variable.
+`Configuration.max_client_errors` now defaults to 3, the same as Crawlee JS. A snapshot of the storage backend counts as overloaded only once its rate-limit errors grow by more than 3 between two snapshots, which are taken a second apart by default. In v1, the limit was 1. The change affects only a storage backend that reports rate-limit errors through `get_rate_limit_errors`, which none of the built-in ones do. To keep the old limit, set `max_client_errors=1` or the `CRAWLEE_MAX_CLIENT_ERRORS` environment variable.
 
 ## Only the first crawler uses the default request queue
 

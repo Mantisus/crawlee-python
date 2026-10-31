@@ -157,7 +157,7 @@ class Configuration(BaseSettings):
             )
         ),
     ] = 3
-    """The number of new rate-limit errors (HTTP 429) between two snapshots of the `StorageClientLoadSignal` above
+    """The number of new rate-limit errors (HTTP 429) between two snapshots of the `StorageBackendLoadSignal` above
     which the later snapshot counts as overloaded."""
 
     memory_mbytes: Annotated[

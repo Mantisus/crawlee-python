@@ -44,8 +44,8 @@ class SystemInfo:
     event_loop_info: LoadRatioInfo
     """The event loop load ratio."""
 
-    storage_client_info: LoadRatioInfo
-    """The storage client load ratio."""
+    storage_backend_info: LoadRatioInfo
+    """The storage backend load ratio."""
 
     load_signal_info: dict[str, LoadRatioInfo] = field(default_factory=dict)
     """The load ratios of the custom load signals, keyed by signal name. A custom signal named after a built-in one
@@ -61,7 +61,7 @@ class SystemInfo:
             not self.cpu_info.is_overloaded
             and not self.memory_info.is_overloaded
             and not self.event_loop_info.is_overloaded
-            and not self.storage_client_info.is_overloaded
+            and not self.storage_backend_info.is_overloaded
             and not any(info.is_overloaded for info in self.load_signal_info.values())
         )
 
@@ -72,7 +72,7 @@ class SystemInfo:
             ('cpu', self.cpu_info),
             ('memory', self.memory_info),
             ('event loop', self.event_loop_info),
-            ('storage client', self.storage_client_info),
+            ('storage backend', self.storage_backend_info),
             *self.load_signal_info.items(),
         ]
         overloaded = [

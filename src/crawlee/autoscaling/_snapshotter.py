@@ -11,7 +11,7 @@ from ._cpu_load_signal import CpuLoadSignal, CpuLoadSignalOptions
 from ._event_loop_load_signal import EventLoopLoadSignal, EventLoopLoadSignalOptions
 from ._load_signal import LoadSignalStartContext
 from ._memory_load_signal import MemoryLoadSignal, MemoryLoadSignalOptions
-from ._storage_client_load_signal import StorageClientLoadSignal, StorageClientLoadSignalOptions
+from ._storage_backend_load_signal import StorageBackendLoadSignal, StorageBackendLoadSignalOptions
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -42,10 +42,10 @@ class LoadSignalsOptions:
     cpu: CpuLoadSignalOptions | Literal[False] = field(default_factory=CpuLoadSignalOptions)
     """Options of the built-in `CpuLoadSignal`, or `False` to switch it off."""
 
-    storage_client: StorageClientLoadSignalOptions | Literal[False] = field(
-        default_factory=StorageClientLoadSignalOptions
+    storage_backend: StorageBackendLoadSignalOptions | Literal[False] = field(
+        default_factory=StorageBackendLoadSignalOptions
     )
-    """Options of the built-in `StorageClientLoadSignal`, or `False` to switch it off."""
+    """Options of the built-in `StorageBackendLoadSignal`, or `False` to switch it off."""
 
     custom: Sequence[LoadSignal] = ()
     """Additional load signals, evaluated alongside the built-in ones. Their names must be unique and must not collide
@@ -87,8 +87,8 @@ class Snapshotter:
         if load_signals.cpu is not False:
             self._load_signals.append(CpuLoadSignal(load_signals.cpu))
 
-        if load_signals.storage_client is not False:
-            self._load_signals.append(StorageClientLoadSignal(load_signals.storage_client))
+        if load_signals.storage_backend is not False:
+            self._load_signals.append(StorageBackendLoadSignal(load_signals.storage_backend))
 
         self._load_signals.extend(load_signals.custom)
 

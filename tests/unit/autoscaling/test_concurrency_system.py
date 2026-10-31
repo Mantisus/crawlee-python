@@ -48,7 +48,7 @@ def system_info(*, overloaded: bool = False) -> SystemInfo:
         cpu_info=LoadRatioInfo(limit_ratio=0.9, actual_ratio=0.3),
         memory_info=LoadRatioInfo(limit_ratio=0.9, actual_ratio=1.0 if overloaded else 0.3),
         event_loop_info=LoadRatioInfo(limit_ratio=0.9, actual_ratio=0.3),
-        storage_client_info=LoadRatioInfo(limit_ratio=0.9, actual_ratio=0.3),
+        storage_backend_info=LoadRatioInfo(limit_ratio=0.9, actual_ratio=0.3),
     )
 
 
@@ -63,7 +63,7 @@ def load_signal(name: str) -> Mock:
 
 def only_custom_signals(*signals: LoadSignal) -> LoadSignalsOptions:
     """Switch the built-in signals off, leaving only `signals` to watch."""
-    return LoadSignalsOptions(memory=False, event_loop=False, cpu=False, storage_client=False, custom=signals)
+    return LoadSignalsOptions(memory=False, event_loop=False, cpu=False, storage_backend=False, custom=signals)
 
 
 @pytest.mark.parametrize(

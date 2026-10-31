@@ -43,7 +43,7 @@ class LoadSignal(Protocol):
     """Reports whether one resource is overloaded.
 
     A `ConcurrencySystem` evaluates all of its signals, and the system counts as overloaded when any of them is. The
-    built-in signals watch memory, the event loop, CPU and the storage client's rate-limit errors. To watch something
+    built-in signals watch memory, the event loop, CPU and the storage backend's rate-limit errors. To watch something
     of your own, pass any object with these members in `LoadSignalsOptions.custom`, no subclassing needed.
     `SnapshotStore` keeps the snapshots for you.
     """
@@ -52,7 +52,7 @@ class LoadSignal(Protocol):
     def name(self) -> str:
         """The key of the signal in the reported `SystemInfo`, unique among the signals of one `ConcurrencySystem`.
 
-        The built-in names `memory_info`, `event_loop_info`, `cpu_info` and `storage_client_info` land in the matching
+        The built-in names `memory_info`, `event_loop_info`, `cpu_info` and `storage_backend_info` land in the matching
         `SystemInfo` fields, so taking one over requires switching that built-in signal off.
         """
 

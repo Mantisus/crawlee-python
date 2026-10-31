@@ -11,7 +11,7 @@ from crawlee._utils.docs import docs_group
 from ._cpu_load_signal import CpuLoadSignal
 from ._event_loop_load_signal import EventLoopLoadSignal
 from ._memory_load_signal import MemoryLoadSignal
-from ._storage_client_load_signal import StorageClientLoadSignal
+from ._storage_backend_load_signal import StorageBackendLoadSignal
 from ._types import LoadRatioInfo, SystemInfo
 
 if TYPE_CHECKING:
@@ -26,7 +26,7 @@ _BUILTIN_SIGNAL_OPTION_KEYS = {
     MemoryLoadSignal.name: 'memory',
     EventLoopLoadSignal.name: 'event_loop',
     CpuLoadSignal.name: 'cpu',
-    StorageClientLoadSignal.name: 'storage_client',
+    StorageBackendLoadSignal.name: 'storage_backend',
 }
 """The names of the built-in signals, which map to `SystemInfo` fields, and the options that switch each off."""
 
@@ -118,7 +118,7 @@ class SystemStatus:
             memory_info=load_signal_info.pop(MemoryLoadSignal.name, unwatched),
             event_loop_info=load_signal_info.pop(EventLoopLoadSignal.name, unwatched),
             cpu_info=load_signal_info.pop(CpuLoadSignal.name, unwatched),
-            storage_client_info=load_signal_info.pop(StorageClientLoadSignal.name, unwatched),
+            storage_backend_info=load_signal_info.pop(StorageBackendLoadSignal.name, unwatched),
             load_signal_info=load_signal_info,
         )
 

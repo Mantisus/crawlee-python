@@ -5,7 +5,7 @@ from ._event_loop_load_signal import EventLoopLoadSignal, EventLoopLoadSignalOpt
 from ._load_signal import LoadSignalStartContext, LoadSnapshot, SnapshotStore
 from ._memory_load_signal import MemoryLoadSignal, MemoryLoadSignalOptions
 from ._snapshotter import LoadSignalsOptions
-from ._storage_client_load_signal import StorageClientLoadSignal, StorageClientLoadSignalOptions
+from ._storage_backend_load_signal import StorageBackendLoadSignal, StorageBackendLoadSignalOptions
 from ._types import ConcurrencyConsumer, LoadRatioInfo, SystemInfo
 
 __all__ = [
@@ -23,7 +23,7 @@ __all__ = [
     'MemoryLoadSignal',
     'MemoryLoadSignalOptions',
     'SnapshotStore',
-    'StorageClientLoadSignal',
-    'StorageClientLoadSignalOptions',
+    'StorageBackendLoadSignal',
+    'StorageBackendLoadSignalOptions',
     'SystemInfo',
 ]

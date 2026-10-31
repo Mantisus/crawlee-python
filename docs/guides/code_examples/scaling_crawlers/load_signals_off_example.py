@@ -12,9 +12,9 @@ from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 async def main() -> None:
     concurrency_system = ConcurrencySystem(
         load_signals=LoadSignalsOptions(
-            # The local storage client reports no rate-limit errors,
+            # The local storage backend reports no rate-limit errors,
             # so there is no point in polling it every second.
-            storage_client=False,
+            storage_backend=False,
             # HTTP crawling barely blocks the event loop,
             # so measure it less often and tolerate more.
             event_loop=EventLoopLoadSignalOptions(
